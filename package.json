@@ -18,10 +18,11 @@
   ],
   "main": "./lib/index.js",
   "scripts": {
+    "surge": "surge ./example",
     "test": "ava",
     "dev": "babel ./src --out-dir ./lib -w",
-    "dev:webpack": "webpack --config webpack.config.babel.js --watch",
-    "build:webpack": "webpack --config webpack.config.babel.js"
+    "dev:webpack": "NODE_ENV=development webpack --config webpack.config.babel.js --watch",
+    "build:webpack": "NODE_ENV=production webpack --config webpack.config.babel.js"
   },
   "dependencies": {
     "babel-register": "^6.24.1",
@@ -35,6 +36,8 @@
     "babel-preset-es2015": "^6.16.0",
     "babel-preset-stage-0": "^6.16.0",
     "expect": "^1.20.2",
+    "uglify-js": "^2.8.28",
+    "uglifyjs-webpack-plugin": "^0.4.3",
     "webpack": "^2.6.1"
   },
   "ava": {

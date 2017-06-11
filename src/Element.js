@@ -5,6 +5,8 @@ import Container from './Container'
 
 class Element {
 
+  instance = 'Element'
+
   constructor(domEl, options) {
     this.domEl = null
     this.parent = null

@@ -5,6 +5,8 @@ import ElementCollection from './ElementCollection'
 
 class Container {
 
+  instance = 'Container'
+
   /**
    *
    * @param name

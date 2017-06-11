@@ -1,4 +1,10 @@
 import webpack from 'webpack'
+import UglifyJsPlugin from 'uglifyjs-webpack-plugin'
+
+
+const globals = {
+  'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+}
 
 
 export default {
@@ -21,18 +27,20 @@ export default {
   },
   
   plugins: [
-    new webpack.DefinePlugin({
-      'process.env.NODE_ENV': JSON.stringify('production'),
-    }),
-    // new UglifyJsPlugin({
-    //   comments: false,
-    //   compress: {
-    //     pure_getters: true,
-    //     unsafe: true,
-    //     unsafe_comps: true,
-    //     warnings: false,
-    //     screw_ie8: true,
-    //   },
-    // }),
+    new webpack.DefinePlugin(globals),
+    ...(
+      process.env.NODE_ENV === 'production' ? [
+        new UglifyJsPlugin({
+          comments: false,
+          compress: {
+            pure_getters: true,
+            unsafe: true,
+            unsafe_comps: true,
+            warnings: false,
+            screw_ie8: true,
+          },
+        }),
+      ] : []
+    ),
   ]
 }

@@ -10,11 +10,7 @@ class Collection {
    * @returns {*}
    */
   _add(item) {
-    if (item.constructor.name !== 'Container' && item.constructor.name !== 'Element') {
-      throw new Error('Wrong item instance class')
-    }
-
-    if (item.constructor.name === 'Container') {
+    if (item.instance === 'Container') {
       if (item.name in this.itemIds) {
         console.warn(`Item with name "${item.name}" already exists in Collection`)
       }
