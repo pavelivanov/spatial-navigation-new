@@ -1,4 +1,5 @@
 import Collection from './Collection'
+import Element from './Element'
 
 
 class ElementCollection extends Collection {
@@ -11,6 +12,19 @@ class ElementCollection extends Collection {
     super()
 
     this.parent = parent
+    /**
+     * Current focused Element in current collection
+     *
+     * @type {null|Element}
+     */
+    this.focusedElement = null
+  }
+
+  // TODO where to move this?
+  setFocusedElement(element) {
+    if (element instanceof Element) {
+      this.focusedElement = element
+    }
   }
 
   append(element) {

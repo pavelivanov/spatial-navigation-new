@@ -6,4 +6,4 @@
 node_modules
 dist
 lib
-lib.js
+spatial-navigation.js

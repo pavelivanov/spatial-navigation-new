@@ -1,11 +1,13 @@
 import ElementCollection from './ElementCollection'
-import ElementNavigation from './ElementNavigation'
+import ContainerNavigation from './ContainerNavigation'
+import Container from './Container'
 
 
 class Element {
 
   constructor(domEl, options) {
     this.domEl = null
+    this.parent = null
     this.collection = new ElementCollection(this)
 
     if (domEl) {
@@ -30,7 +32,19 @@ class Element {
 
   focus() {
     this.domEl.focus()
-    ElementNavigation.setFocusedElement(this)
+    this.parent.collection.setFocusedElement(this)
+    ContainerNavigation.setFocusedContainer(this.getContainer())
+  }
+
+  /**
+   * Get Container which contains current Element
+   *
+   */
+  getContainer(parent = this.parent) {
+    if (!parent || !(parent instanceof Container)) {
+      return this.getContainer(parent.parent)
+    }
+    return parent
   }
 }
 

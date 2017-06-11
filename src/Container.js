@@ -1,4 +1,5 @@
 import ContainerCollection from './ContainerCollection'
+import ContainerNavigation from './ContainerNavigation'
 import ElementCollection from './ElementCollection'
 
 
@@ -16,10 +17,19 @@ class Container {
     this.name         = name
     this.leaveTo      = leaveTo || {}
     this.collection   = new ElementCollection(this)
+
+    ContainerCollection.addContainer(this)
   }
 
   focus() {
-    ContainerCollection.setFocusedContainer(this)
+    // TODO ductape
+    if (this.collection.focusedElement) {
+      this.collection.focusedElement.focus()
+    } else {
+      this.collection.getByIndex(0).focus()
+    }
+
+    ContainerNavigation.setFocusedContainer(this)
   }
 }
 

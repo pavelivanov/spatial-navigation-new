@@ -29,7 +29,7 @@ class Navigation {
     this.focusInstance(instanceToFocus)
   }
 
-  getInstanceToFocus(direction, instance = ElementNavigation.focusedElement) {
+  getInstanceToFocus(direction, instance = ContainerNavigation.focusedContainer.collection.focusedElement) {
     let instanceToFocus
 
     if (!instance) {

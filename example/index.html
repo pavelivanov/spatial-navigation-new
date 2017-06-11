@@ -15,15 +15,51 @@
       outline: none;
     }
 
+    .clear:after {
+      content: '';
+      display: block;
+      height: 0;
+      line-height: 0;
+      font-size: 0;
+      clear: both;
+    }
+
     .center {
       width: 1000px;
       margin: 0 auto;
     }
 
     .header {
-      height: 40px;
-      padding: 10px 0;
+      height: 30px;
+      padding: 15px 0;
       border-bottom: 1px solid #ddd;
+    }
+
+    .search {
+      width: 240px;
+      height: 28px;
+      border: 1px solid #aaa;
+      padding: 0 12px;
+      font-size: 14px;
+      float: left;
+    }
+
+    .search:focus {
+      border-color: #ff4190;
+    }
+
+    .loginButton {
+      height: 30px;
+      line-height: 30px;
+      background-color: #1edeb2;
+      padding: 0 20px;
+      cursor: pointer;
+      float: right;
+      color: #fff;
+    }
+
+    .loginButton:focus {
+      box-shadow: #ff4190 0 0 0 1px;
     }
 
     .content {
@@ -31,6 +67,7 @@
     }
 
     .items {
+      margin: -15px;
       font-size: 0;
     }
 
@@ -45,12 +82,13 @@
       height: 60px;
       line-height: 60px;
       border: 1px solid #ddd;
+      cursor: pointer;
       text-align: center;
       font-size: 24px;
     }
 
     .itemContainer:focus .item {
-      border-color: #ff1460;
+      border-color: #ff4190;
     }
   </style>
 </head>
@@ -58,16 +96,18 @@
 
   <div class="header">
     <div class="center">
-
+      <input id="search" class="search" placeholder="Search..." />
+      <div id="loginButton" class="loginButton">Login</div>
+      <div class="clear"></div>
     </div>
   </div>
   <div class="center">
     <div class="content">
-      <div class="items" id="items"></div>
+      <div id="items" class="items"></div>
     </div>
   </div>
 
-  <script src="../dist/spatial-navigation.js"></script>
+  <script src="./spatial-navigation.js"></script>
 
   <script>
     spatialNavigation.Keyboard.setup([
@@ -83,7 +123,17 @@
 
   <script>
     const itemsNode = document.getElementById('items')
-    const ItemContainer = new spatialNavigation.Container('Items')
+    const searchNode = document.getElementById('search')
+    const loginButtonNode = document.getElementById('loginButton')
+
+    const ItemContainer         = new spatialNavigation.Container('Items', { leaveTo: { up: 'Search' } })
+    const SearchContainer       = new spatialNavigation.Container('Search', { leaveTo: { right: 'LoginButton', down: 'Items' } })
+    const LoginButtonContainer  = new spatialNavigation.Container('LoginButton', { leaveTo: { left: 'Search', down: 'Items' } })
+    const SearchElement         = new spatialNavigation.Element(searchNode)
+    const LoginButtonElement    = new spatialNavigation.Element(loginButtonNode)
+
+    SearchContainer.collection.append(SearchElement)
+    LoginButtonContainer.collection.append(LoginButtonElement)
 
     const getItem = (title) => {
       const item = document.createElement('div')

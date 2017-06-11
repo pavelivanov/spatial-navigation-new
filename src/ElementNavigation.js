@@ -1,17 +1,4 @@
-import Element from './Element'
-
-
 class ElementNavigation {
-
-  constructor() {
-    this.focusedElement = null
-  }
-
-  setFocusedElement(element) {
-    if (element instanceof Element) {
-      this.focusedElement = element
-    }
-  }
 
   getElementToFocus(possibleElementToFocus, direction) {
     let elementToFocus

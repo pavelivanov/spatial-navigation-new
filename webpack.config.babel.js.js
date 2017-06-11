@@ -5,7 +5,7 @@ export default {
   entry: './src/index',
 
   output: {
-    filename: './dist/spatial-navigation.js',
+    filename: './example/spatial-navigation.js',
     libraryTarget: 'umd',
     library: 'spatialNavigation',
   },
