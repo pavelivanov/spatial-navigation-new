@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: "Open Sans", sans-serif;
+    }
+
+    *:focus {
+      outline: none;
+    }
+
+    .center {
+      width: 1000px;
+      margin: 0 auto;
+    }
+
+    .header {
+      height: 40px;
+      padding: 10px 0;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .content {
+      padding: 30px 0 50px;
+    }
+
+    .items {
+      font-size: 0;
+    }
+
+    .itemContainer {
+      width: 20%;
+      display: inline-block;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+
+    .item {
+      height: 60px;
+      line-height: 60px;
+      border: 1px solid #ddd;
+      text-align: center;
+      font-size: 24px;
+    }
+
+    .itemContainer:focus .item {
+      border-color: #ff1460;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="header">
+    <div class="center">
+
+    </div>
+  </div>
+  <div class="center">
+    <div class="content">
+      <div class="items" id="items"></div>
+    </div>
+  </div>
+
+  <script src="../dist/spatial-navigation.js"></script>
+
+  <script>
+    spatialNavigation.Keyboard.setup([
+      { keyCode: 37, name: 'left' },
+      { keyCode: 38, name: 'up' },
+      { keyCode: 39, name: 'right' },
+      { keyCode: 40, name: 'down' },
+      { keyCode: 27, name: 'esc' },
+      { keyCode: 13, name: 'enter' },
+      { keyCode: 9, name: 'tab' }
+    ])
+  </script>
+
+  <script>
+    const itemsNode = document.getElementById('items')
+    const ItemContainer = new spatialNavigation.Container('Items')
+
+    const getItem = (title) => {
+      const item = document.createElement('div')
+      item.classList.add('itemContainer')
+      item.innerHTML = `<div class="item">${title}</div>`
+      return item
+    }
+
+    let count = 1
+    let itemCount = 19
+    while (count < itemCount) {
+      const item = getItem(count++)
+      const Item = new spatialNavigation.Element(item)
+
+      ItemContainer.collection.append(Item)
+      itemsNode.appendChild(item)
+    }
+  </script>
+
+</body>
+</html>
