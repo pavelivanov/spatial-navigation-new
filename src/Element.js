@@ -33,9 +33,14 @@ class Element {
   }
 
   focus() {
-    this.domEl.focus()
-    this.parent.collection.setFocusedElement(this)
-    ContainerNavigation.setFocusedContainer(this.getContainer())
+    if (Boolean(this.collection.length)) {
+      this.collection.getByIndex(0).focus()
+    }
+    else {
+      this.domEl.focus()
+      ContainerNavigation.setFocusedContainer(this.getContainer())
+      this.getContainer().setFocusedElement(this)
+    }
   }
 
   /**

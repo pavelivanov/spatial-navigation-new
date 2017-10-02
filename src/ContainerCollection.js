@@ -8,7 +8,7 @@ class ContainerCollection extends Collection {
   }
 
   addContainer(container) {
-    super.append(container)
+    super.append(container, container.name)
   }
 }
 

@@ -6,38 +6,35 @@ class Collection {
   }
 
   /**
-   * @param item {Container|Element}
-   * @returns {*}
-   */
-  _add(item) {
-    if (item.instance === 'Container') {
-      if (item.name in this.itemIds) {
-        console.warn(`Item with name "${item.name}" already exists in Collection`)
-      }
-
-      this.itemIds[item.name] = this.items.length - 1
-    }
-  }
-
-  /**
    * Add item at the start of current collection
    * @param item
+   * @param key {string|number}
    * @returns {*}
    */
-  prepend(item) {
+  prepend(item, key) {
     this.items.unshift(item)
-    this._add(item)
+    if (key) {
+      for (let key in this.itemIds) {
+        if (this.itemIds.hasOwnProperty(key)) {
+          this.itemIds[key] += 1
+        }
+      }
+      this.itemIds[key] = 0
+    }
     return item
   }
 
   /**
    * Add item at the end of current collection
    * @param item
+   * * @param key {string|number}
    * @returns {*}
    */
-  append(item) {
+  append(item, key) {
     this.items.push(item)
-    this._add(item)
+    if (key) {
+      this.itemIds[key] = this.items.length - 1
+    }
     return item
   }
 
@@ -60,21 +57,21 @@ class Collection {
   }
 
   /**
-   * Get Container by name from current collection
-   * @param name
+   * Get Container by key [id] from current collection
+   * @param key {string|number}
    * @returns {*}
    */
-  getByName(name) {
-    return this.items[this.itemIds[name]]
+  getByKey(key) {
+    return this.items[this.itemIds[key]]
   }
 
   /**
    * Check if Container with such name exists in current collection
-   * @param name
+   * @param key {string|number}
    * @returns {boolean}
    */
-  isExists(name) {
-    return Boolean(this.getByName(name))
+  isExist(key) {
+    return Boolean(this.getByKey(key))
   }
 
   /**

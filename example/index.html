@@ -46,6 +46,7 @@
 
     .search:focus {
       border-color: #ff4190;
+      box-shadow: #ff4190 0 0 0 1px;
     }
 
     .loginButton {
@@ -59,7 +60,7 @@
     }
 
     .loginButton:focus {
-      box-shadow: #ff4190 0 0 0 1px;
+      box-shadow: #ff4190 0 0 0 2px;
     }
 
     .content {
@@ -74,21 +75,40 @@
     .itemContainer {
       width: 20%;
       display: inline-block;
-      padding: 15px;
+      padding: 5px;
       box-sizing: border-box;
-    }
-
-    .item {
-      height: 60px;
-      line-height: 60px;
-      border: 1px solid #ddd;
-      cursor: pointer;
-      text-align: center;
-      font-size: 24px;
     }
 
     .itemContainer:focus .item {
       border-color: #ff4190;
+      box-shadow: #ff4190 0 0 0 1px;
+    }
+
+    .item {
+      border: 1px solid #ddd;
+      padding: 10px 0 5px;
+      cursor: pointer;
+      text-align: center;
+      font-size: 20px;
+    }
+
+    .nav {
+      display: flex;
+      margin-top: 15px;
+    }
+
+    .navItem {
+      width: 50%;
+      height: 20px;
+      line-height: 20px;
+      border: 1px solid #aaa;
+      margin: 0 5px;
+      font-size: 12px;
+    }
+
+    .navItem:focus {
+      border-color: #ff4190;
+      box-shadow: #ff4190 0 0 0 1px;
     }
   </style>
 </head>
@@ -138,15 +158,34 @@
     const getItem = (title) => {
       const item = document.createElement('div')
       item.classList.add('itemContainer')
-      item.innerHTML = `<div class="item">${title}</div>`
+      item.innerHTML = `
+        <div class="item">
+          ${title}
+          <div class="nav">
+            <div class="navItem">Modal</div>
+            <div class="navItem">Console</div>
+          </div>
+        </div>
+      `
       return item
     }
 
     let count = 1
-    let itemCount = 19
+    let itemCount = 86
     while (count < itemCount) {
-      const item = getItem(count++)
+      const item      = getItem(count++)
+      const nav       = item.querySelector('.nav')
+      const navItems  = item.querySelectorAll('.navItem')
+
       const Item = new spatialNavigation.Element(item)
+      const Nav = new spatialNavigation.Element(nav)
+
+      Item.collection.append(Nav)
+
+      navItems.forEach((navItem) => {
+        const NavItem = new spatialNavigation.Element(navItem)
+        Nav.collection.append(NavItem)
+      })
 
       ItemContainer.collection.append(Item)
       itemsNode.appendChild(item)
